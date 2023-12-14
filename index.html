@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Лабораторная работа №4</title>
+    
+        <link rel="stylesheet" href="styles.css">
+
+</head>
+
+<body>
+    <div id="header">Сайтик на GitHub</div>  
+    <label for="s">Сумма которую надо накопить: </label>
+    <input type="text" id="s" value="1000000"><br>
+    <label for="r">Часовая ставка: </label>
+    <input type="text" id="r" value="100"><br>
+
+    <button onclick="calculateSum()">Рассчитать</button>
+    <p id="result"></p>
+</body>
+
+<script type="text/javascript">
+    var timerInterval; var targetDate;
+
+    function calculateSum() {
+        var s = parseFloat(document.getElementById('s').value);
+        var r = parseFloat(document.getElementById('r').value);
+        var h = s / r;
+        var days = h / 24;
+        var weeks = days / 7;
+        var years = h / 2080; // Assuming 2080 working hours in a year
+
+        document.getElementById('result').innerHTML = "<br>Часов необходимо отработать: " + h.toFixed(2) +
+            "<br>Дней: " + days.toFixed(2) +
+            "<br>Недель: " + weeks.toFixed(2) +
+            "<br>Лет: " + years.toFixed(2) +
+            "<br><label for='bonus'>Выдали премию: </label>" +
+            "<input type='text' id='bonus' value='100'><br>" +
+            "<button onclick='calculateBonus()'>Вычитать время на отработку</button>" +
+            "<p id='timer'></p>";
+        beginTimer(days);
+    }
+
+    function beginTimer(days) {
+        clearInterval(timerInterval);
+        targetDate = new Date();
+        targetDate.setDate(targetDate.getDate() + days);
+
+        var timerElement = document.getElementById('timer');
+
+        timerInterval = setInterval(function () {
+            var currentDate = new Date().getTime();
+            var timeRemaining = targetDate - currentDate;
+
+            var daysLeft = Math.floor(timeRemaining / (1000 * 60 * 60 * 24));
+            var hoursLeft = Math.floor((timeRemaining % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            var minutesLeft = Math.floor((timeRemaining % (1000 * 60 * 60)) / (1000 * 60));
+            var secondsLeft = Math.floor((timeRemaining % (1000 * 60)) / 1000);
+
+            timerElement.innerHTML = 'Осталось времени: ' + daysLeft + ' дн. ' + hoursLeft +
+                ' ч. ' + minutesLeft + ' мин. ' + secondsLeft + ' сек.';
+
+            if (timeRemaining <= 0) {
+                clearInterval(timerInterval);
+                timerElement.innerHTML = 'Таймер истек.';
+            }
+        }, 1000);
+    }
+    
+    function calculateBonus() {
+        var hourlyRate = parseFloat(document.getElementById("r").value);
+        var bonusAmount = parseFloat(document.getElementById("bonus").value); // добавляем получение значения бонуса
+        var hours = bonusAmount/hourlyRate;
+        var ms = hours * 60 * 60 * 1000;
+        targetDate = new Date(targetDate.getTime() - ms);  
+    }
+
+    function resumeTimer() {
+        var targetDate = new Date();
+        targetDate.setDate(targetDate.getDate() + daysLeft);
+
+        timerInterval = setInterval(function () {
+            var currentDate = new Date().getTime();
+            var timeRemaining = targetDate - currentDate;
+
+            var daysLeft = Math.floor(timeRemaining / (1000 * 60 * 60 * 24));
+            var hoursLeft = Math.floor((timeRemaining % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            var minutesLeft = Math.floor((timeRemaining % (1000 * 60 * 60)) / (1000 * 60));
+            var secondsLeft = Math.floor((timeRemaining % (1000 * 60)) / 1000);
+
+            timerElement.innerHTML = 'Осталось времени: ' + daysLeft + ' дн. ' + hoursLeft +
+                ' ч. ' + minutesLeft + ' мин. ' + secondsLeft + ' сек.';
+
+            if (timeRemaining <= 0) {
+                clearInterval(timerInterval);
+                timerElement.innerHTML = 'Таймер истек.';
+            }
+        }, 1000);
+    }
+</script>
+
+</html>
