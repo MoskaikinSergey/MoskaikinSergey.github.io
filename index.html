@@ -22,21 +22,21 @@
       <input
         type="checkbox"
         id="interest1"
-        name="interest1"
+        name="Математика"
         value="Interest1"
       />
       <label for="interest1"> Математика</label><br />
       <input
         type="checkbox"
         id="interest2"
-        name="interest2"
+        name="Физика"
         value="Interest2"
       />
       <label for="interest2"> Физика</label><br />
       <input
         type="checkbox"
         id="interest3"
-        name="interest3"
+        name="Программирование"
         value="Interest3"
       />
       <label for="interest3"> Программирование</label><br />
@@ -47,144 +47,4 @@
     <script src="script.js"></script>
     <div id="output"></div>
   </body>
-
-  <script type="text/javascript">
-    document
-      .getElementById("userForm")
-      .addEventListener("submit", function (event) {
-        event.preventDefault();
-
-        var name = document.getElementById("name").value;
-        var birthday = new Date(document.getElementById("birthday").value);
-        var category = document.getElementById("category").value;
-        var interests = Array.from(
-          document.querySelectorAll('input[name="interests"]:checked')
-        ).map((i) => i.value);
-        var photo = document.getElementById("photo").files[0];
-
-        var today = new Date();
-        var age = today.getFullYear() - birthday.getFullYear();
-        var m = today.getMonth() - birthday.getMonth();
-        if (m < 0 || (m === 0 && today.getDate() < birthday.getDate())) {
-          age--;
-        }
-
-        console.log("ФИО:", name);
-        console.log("Возраст:", age);
-        console.log("Категория:", category);
-        console.log("Интересы:", interests);
-        console.log("Фото:", photo);
-
-        // Остальные задачи
-      });
-
-    var timerInterval;
-    var targetDate;
-
-    function calculateInterestingAnniversaries(birthDate) {
-      const currentDate = new Date();
-      const millisecondsInDay = 1000 * 60 * 60 * 24;
-      const daysLived = Math.floor(
-        (currentDate - birthDate) / millisecondsInDay
-      );
-
-      const anniversaries = [10000, 5555]; // Add more if needed
-      const result = anniversaries.map((days) => {
-        const nextAnniversary = Math.ceil(daysLived / days) * days;
-        const nextAnniversaryDate = new Date(
-          birthDate.getTime() + nextAnniversary * millisecondsInDay
-        );
-        return { days, nextAnniversary, nextAnniversaryDate };
-      });
-
-      return result;
-    }
-
-    // Example usage
-    const birthDate = new Date("1990-01-01");
-    const interestingAnniversaries =
-      calculateInterestingAnniversaries(birthDate);
-    console.log(interestingAnniversaries);
-
-    function beginTimer(days) {
-      clearInterval(timerInterval);
-      targetDate = new Date();
-      targetDate.setDate(targetDate.getDate() + days);
-
-      var timerElement = document.getElementById("timer");
-
-      timerInterval = setInterval(function () {
-        var currentDate = new Date().getTime();
-        var timeRemaining = targetDate - currentDate;
-
-        var daysLeft = Math.floor(timeRemaining / (1000 * 60 * 60 * 24));
-        var hoursLeft = Math.floor(
-          (timeRemaining % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
-        );
-        var minutesLeft = Math.floor(
-          (timeRemaining % (1000 * 60 * 60)) / (1000 * 60)
-        );
-        var secondsLeft = Math.floor((timeRemaining % (1000 * 60)) / 1000);
-
-        timerElement.innerHTML =
-          "Осталось времени: " +
-          daysLeft +
-          " дн. " +
-          hoursLeft +
-          " ч. " +
-          minutesLeft +
-          " мин. " +
-          secondsLeft +
-          " сек.";
-
-        if (timeRemaining <= 0) {
-          clearInterval(timerInterval);
-          timerElement.innerHTML = "Таймер истек.";
-        }
-      }, 1000);
-    }
-
-    function calculateBonus() {
-      var hourlyRate = parseFloat(document.getElementById("r").value);
-      var bonusAmount = parseFloat(document.getElementById("bonus").value); // добавляем получение значения бонуса
-      var hours = bonusAmount / hourlyRate;
-      var ms = hours * 60 * 60 * 1000;
-      targetDate = new Date(targetDate.getTime() - ms);
-    }
-
-    function resumeTimer() {
-      var targetDate = new Date();
-      targetDate.setDate(targetDate.getDate() + daysLeft);
-
-      timerInterval = setInterval(function () {
-        var currentDate = new Date().getTime();
-        var timeRemaining = targetDate - currentDate;
-
-        var daysLeft = Math.floor(timeRemaining / (1000 * 60 * 60 * 24));
-        var hoursLeft = Math.floor(
-          (timeRemaining % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
-        );
-        var minutesLeft = Math.floor(
-          (timeRemaining % (1000 * 60 * 60)) / (1000 * 60)
-        );
-        var secondsLeft = Math.floor((timeRemaining % (1000 * 60)) / 1000);
-
-        timerElement.innerHTML =
-          "Осталось времени: " +
-          daysLeft +
-          " дн. " +
-          hoursLeft +
-          " ч. " +
-          minutesLeft +
-          " мин. " +
-          secondsLeft +
-          " сек.";
-
-        if (timeRemaining <= 0) {
-          clearInterval(timerInterval);
-          timerElement.innerHTML = "Таймер истек.";
-        }
-      }, 1000);
-    }
-  </script>
 </html>
