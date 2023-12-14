@@ -8,30 +8,76 @@
 
   <body>
     <form id="userForm">
-        <label for="name">ФИО:</label><br>
-        <input type="text" id="name" name="name"><br>
-        <label for="birthday">Дата рождения:</label><br>
-        <input type="date" id="birthday" name="birthday"><br>
-        <label for="category">Категория:</label><br>
-        <select id="category" name="category">
-          <option value="employee">Служащий</option>
-          <option value="student">Учащийся</option>
-          <option value="entrepreneur">Предприниматель</option>
-        </select><br>
-        <label for="interests">Сфера интересов:</label><br>
-        <input type="checkbox" id="interest1" name="interest1" value="Interest1">
-        <label for="interest1"> Interest1</label><br>
-        <input type="checkbox" id="interest2" name="interest2" value="Interest2">
-        <label for="interest2"> Interest2</label><br>
-        <input type="checkbox" id="interest3" name="interest3" value="Interest3">
-        <label for="interest3"> Interest3</label><br>
-        <label for="photo">Фото:</label><br>
-        <input type="file" id="photo" name="photo"><br>
-        <input type="submit" value="Отправить">
-      </form>
+      <label for="name">ФИО:</label><br />
+      <input type="text" id="name" name="name" /><br />
+      <label for="birthday">Дата рождения:</label><br />
+      <input type="date" id="birthday" name="birthday" /><br />
+      <label for="category">Категория:</label><br />
+      <select id="category" name="category">
+        <option value="employee">Служащий</option>
+        <option value="student">Учащийся</option>
+        <option value="entrepreneur">Предприниматель</option></select
+      ><br />
+      <label for="interests">Сфера интересов:</label><br />
+      <input
+        type="checkbox"
+        id="interest1"
+        name="interest1"
+        value="Interest1"
+      />
+      <label for="interest1"> Математика</label><br />
+      <input
+        type="checkbox"
+        id="interest2"
+        name="interest2"
+        value="Interest2"
+      />
+      <label for="interest2"> Физика</label><br />
+      <input
+        type="checkbox"
+        id="interest3"
+        name="interest3"
+        value="Interest3"
+      />
+      <label for="interest3"> Программирование</label><br />
+      <label for="photo">Фото:</label><br />
+      <input type="file" id="photo" name="photo" /><br />
+      <input type="submit" value="Отправить" />
+    </form>
+    <script src="script.js"></script>
+    <div id="output"></div>
   </body>
 
   <script type="text/javascript">
+    document
+      .getElementById("userForm")
+      .addEventListener("submit", function (event) {
+        event.preventDefault();
+
+        var name = document.getElementById("name").value;
+        var birthday = new Date(document.getElementById("birthday").value);
+        var category = document.getElementById("category").value;
+        var interests = Array.from(
+          document.querySelectorAll('input[name="interests"]:checked')
+        ).map((i) => i.value);
+        var photo = document.getElementById("photo").files[0];
+
+        var today = new Date();
+        var age = today.getFullYear() - birthday.getFullYear();
+        var m = today.getMonth() - birthday.getMonth();
+        if (m < 0 || (m === 0 && today.getDate() < birthday.getDate())) {
+          age--;
+        }
+
+        console.log("ФИО:", name);
+        console.log("Возраст:", age);
+        console.log("Категория:", category);
+        console.log("Интересы:", interests);
+        console.log("Фото:", photo);
+
+        // Остальные задачи
+      });
+
     var timerInterval;
     var targetDate;
 
