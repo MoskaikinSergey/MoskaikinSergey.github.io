@@ -25,7 +25,7 @@ document.getElementById('userForm').addEventListener('submit', function(event) {
                  'Возраст: ' + age + '<br>' +
                  'Категория: ' + category + '<br>' +
                  'Интересы: ' + interests.join(', ') + '<br>' +
-                 'Фото: ' + photo.name + '<br>' +
+                 'Фото: <img src="' + URL.createObjectURL(photo) + '" alt="Photo" /><br>' +
                  'Количество дней: ' + days + '<br>' +
                  'Следующее число дней в следующую степень 10: ' + nextPowerOfTen + '<br>' +
                  'Следующее число дней с нулями везде кроме последней цифры: ' + nextZeroes + '<br>' +
